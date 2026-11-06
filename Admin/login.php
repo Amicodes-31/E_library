@@ -4,7 +4,7 @@ session_start();
 
 // If admin is already logged in, go to dashboard
 if (isset($_SESSION['admin_id'])) {
-    header("Location: ../dashboard.php");
+    header("Location: dashboard.php");
     exit;
 }
 

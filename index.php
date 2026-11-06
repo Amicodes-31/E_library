@@ -2,11 +2,10 @@
 require_once __DIR__ . '/Config/db-connect.php';
 require_once __DIR__ . '/Includes/Public-Header.php';
 
-$sql = "SELECT id, title, author, publisher
+$sql = "SELECT id, title, author, publisher, book_image
         FROM books
         ORDER BY id DESC
         LIMIT 6";
-
 $result = mysqli_query($conn, $sql);
 ?>
 
@@ -66,15 +65,32 @@ $result = mysqli_query($conn, $sql);
 </section>
 
 <!-- Featured Books -->
-<section class="py-5">
+<section class="py-5" style="background-color:#F5F3ED;">
     <div class="container">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="fw-bold">Recently Added Books</h2>
+        <div class="d-flex flex-wrap justify-content-between
+                    align-items-center mb-5 gap-3">
 
-            <a href="books.php" class="text-success">
-                View All Books
+            <div>
+                <p class="text-uppercase small fw-semibold mb-2"
+                   style="color:#8A7650; letter-spacing:2px;">
+                    Explore Our Collection
+                </p>
+
+                <h2 class="fw-bold mb-2" style="color:#203A31;">
+                    Recently Added Books
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Discover the latest additions to our library.
+                </p>
+            </div>
+
+            <a href="books.php"
+               class="btn btn-outline-success rounded-pill px-4">
+                View All Books →
             </a>
+
         </div>
 
         <div class="row g-4">
@@ -83,50 +99,81 @@ $result = mysqli_query($conn, $sql);
 
                 <?php while ($book = mysqli_fetch_assoc($result)) { ?>
 
-                    <div class="col-md-4">
-                        <div class="card h-100 shadow-sm border-0">
+                    <div class="col-sm-6 col-lg-4">
 
-                            <div class="p-4 text-center"
-                                 style="background:#203A31; color:#D7C69B;">
-                                <h1>📖</h1>
-                                <h6>OTUKPO TECH ACADEMY E-LIBRARY</h6>
+                        <div class="card h-100 border-0 rounded-4 shadow-sm
+                                    overflow-hidden book-card">
+
+                            <!-- Book Cover -->
+                            <div class="p-3 text-center"
+                                 style="background:#FFFFFF;">
+
+                                <?php if (!empty($book['book_image'])) { ?>
+
+                                    <img
+                                        src="assets/images/<?php echo htmlspecialchars($book['book_image']); ?>"
+                                        alt="<?php echo htmlspecialchars($book['title']); ?>"
+                                        class="img-fluid"
+                                        style="height:230px; width:100%;
+                                               object-fit:contain;">
+
+                                <?php } else { ?>
+
+                                    <div class="d-flex align-items-center
+                                                justify-content-center"
+                                         style="height:230px;
+                                                background:#203A31;">
+                                        <span style="font-size:55px;">📖</span>
+                                    </div>
+
+                                <?php } ?>
+
                             </div>
 
-                            <div class="card-body">
-                                <h5 class="card-title">
+                            <!-- Book Details -->
+                            <div class="card-body p-4 d-flex flex-column">
+
+                                <h5 class="fw-bold mb-3"
+                                    style="color:#203A31; min-height:48px;">
                                     <?php echo htmlspecialchars($book['title']); ?>
                                 </h5>
 
-                                <p class="text-muted">
-                                    Author:
+                                <p class="text-muted small mb-2">
+                                    <strong>Author:</strong>
                                     <?php echo htmlspecialchars($book['author']); ?>
                                 </p>
 
-                                <p class="text-muted">
-                                    Publisher:
+                                <p class="text-muted small mb-4">
+                                    <strong>Publisher:</strong>
                                     <?php echo htmlspecialchars($book['publisher']); ?>
                                 </p>
 
                                 <a href="books.php"
-                                   class="btn btn-library">
+                                   class="btn btn-library rounded-pill
+                                          mt-auto w-100">
                                     Browse Catalogue
                                 </a>
+
                             </div>
 
                         </div>
+
                     </div>
 
                 <?php } ?>
 
             <?php } else { ?>
 
-                <div class="col-12 text-center">
-                    <p>No books have been added yet.</p>
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">
+                        No books have been added yet.
+                    </p>
                 </div>
 
             <?php } ?>
 
         </div>
+
     </div>
 </section>
 

@@ -17,6 +17,7 @@ require_once __DIR__ . '/../Classes/Member.php';
 $memberModel = new Member($conn);
 
 $result = $memberModel->getAllMembers();
+require_once __DIR__ . '/../Includes/Header.php';
 
 ?>
 
