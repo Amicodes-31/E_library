@@ -1,0 +1,10 @@
+# Database credentials
+Config/db-connect.php
+
+# Private environment files
+.env
+.env.*
+
+# Temporary files
+*.log
+.DS_Store
